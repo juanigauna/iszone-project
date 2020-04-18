@@ -1,0 +1,14 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^welcome(.*) index.php?link=welcome [NC,QSA]
+RewriteRule ^account/(.*) index.php?link=account&u_acc=$1 [NC,QSA]
+RewriteRule ^edit/account(.*) index.php?link=edit-account [NC,QSA]
+RewriteRule ^new/account(.*) index.php?link=new-account [NC,QSA]
+RewriteRule ^event/new(.*) index.php?link=new-event [NC,QSA]
+RewriteRule ^notifications(.*) index.php?link=notifications [NC,QSA]
+RewriteRule ^recover/password(.*) index.php?link=recover-password [NC,QSA]
+RewriteRule ^terms-and-conditions(.*) index.php?link=terms-and-conditions [NC,QSA]
+RewriteRule ^home(.*) index.php?link=home [NC,QSA]
+RewriteRule ^post/(.*) index.php?link=post&post_id=$1 [NC,QSA]
