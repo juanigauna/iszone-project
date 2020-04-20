@@ -15,7 +15,11 @@
 			</div>
 		</div>
 		<div class="d-flex p-absolute" style="right: 7px;">
-			<span id="like_comment_<?php echo $n['comment']['id'] ?>" onclick="like_comment(<?php echo $n['comment']['id'] ?>, <?php echo $n['comment']['user_id'] ?>);"><i id="iconc_<?php echo $n['comment']['id'] ?>" class="far fa-heart"></i></span>
+			<?php if (check_like($id, $n['comment']['id'], "comment") == false) { ?>
+				<span id="like_comment_<?php echo $n['comment']['id'] ?>" onclick="like_comment(<?php echo $n['comment']['id'] ?>, <?php echo $n['comment']['user_id'] ?>);"><i id="iconc_<?php echo $n['comment']['id'] ?>" class="far fa-heart"></i></span>
+			<?php } elseif (check_like($id, $n['comment']['id'], "comment") == true) { ?>
+				<span id="like_comment_<?php echo $n['comment']['id'] ?>" class="liked" onclick="like_comment(<?php echo $n['comment']['id'] ?>, <?php echo $n['comment']['user_id'] ?>);"><i id="iconc_<?php echo $n['comment']['id'] ?>" class="fas fa-heart"></i></span>
+			<?php } ?>
 		</div>
 	</div>
 	<div id="reply_comment_<?php echo $n['comment']['id'] ?>" class="hidden" style="padding-left: 50px;">

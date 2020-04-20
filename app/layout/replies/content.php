@@ -14,7 +14,11 @@
 			</div>
 		</div>
 		<div class="d-flex p-absolute" style="right: 7px;">
-			<span id="like_reply_<?php echo $n['reply']['id'] ?>" onclick="like_reply(<?php echo $n['reply']['id'] ?>, <?php echo $n['reply']['user_id'] ?>);"><i id="iconc_<?php echo $n['reply']['id'] ?>" class="far fa-heart"></i></span>
+			<?php if (check_like($id, $n['reply']['id'], "reply") == false) { ?>
+				<span id="like_reply_<?php echo $n['reply']['id'] ?>" onclick="like_reply(<?php echo $n['reply']['id'] ?>, <?php echo $n['reply']['user_id'] ?>);"><i id="iconr_<?php echo $n['reply']['id'] ?>" class="far fa-heart"></i></span>
+			<?php } elseif (check_like($id, $n['reply']['id'], "reply") == true) { ?>
+				<span id="like_reply_<?php echo $n['reply']['id'] ?>" class="liked" onclick="like_reply(<?php echo $n['reply']['id'] ?>, <?php echo $n['reply']['user_id'] ?>);"><i id="iconr_<?php echo $n['reply']['id'] ?>" class="fas fa-heart"></i></span>
+			<?php } ?>
 		</div>
 	</div>
 </div>

@@ -95,21 +95,17 @@ function like(post_id, to_id) {
 		document.getElementById('like_post_' + post_id).className = 'btn-action-post m-r-2 liked';
 		getID('tl_' + post_id).innerHTML = like;
 		getID('tln_' + post_id).value = like;
-		ajax({
-			type: 'POST',
-			url: site_url() + '?f=like&post_id=' + post_id + '&to_id=' + to_id,
-		})
 	} else if (element == 'btn-action-post m-r-2 liked') {
 		var dislike = Number(number) - Number(1);
 		document.getElementById('icon_' + post_id).className = 'far fa-heart m-r-2';
 		document.getElementById('like_post_' + post_id).className = 'btn-action-post m-r-2';
 		getID('tl_' + post_id).innerHTML = dislike;
 		getID('tln_' + post_id).value = dislike;
-		ajax({
-			type: 'POST',
-			url: site_url() + '?f=like&post_id=' + post_id + '&to_id=' + to_id,
-		})
 	}
+	ajax({
+		type: 'POST',
+		url: site_url() + '?f=like_post&post_id=' + post_id + '&to_id=' + to_id,
+	})
 }
 function like_comment(comment_id, to_id) {
     var audio = new Audio(siteurl() + '/app/resources/mp3/notification-1.mp3');
@@ -122,21 +118,40 @@ function like_comment(comment_id, to_id) {
 		document.querySelector('#like_comment_' + comment_id).setAttribute('class', 'liked');
 		//getID('tl_' + comment_id).innerHTML = like;
 		//getID('tln_' + comment_id).value = like;
-		/*ajax({
-			type: 'POST',
-			url: site_url() + '?f=like&comment_id=' + comment_id + '&to_id=' + to_id,
-		})*/
 	} else if (element == 'liked') {
 		//var dislike = Number(number) - Number(1);
 		document.getElementById('iconc_' + comment_id).className = 'far fa-heart';
 		document.querySelector('#like_comment_' + comment_id).removeAttribute('class');
 		//getID('tl_' + comment_id).innerHTML = dislike;
 		//getID('tln_' + comment_id).value = dislike;
-		/*ajax({
-			type: 'POST',
-			url: site_url() + '?f=like&comment_id=' + comment_id + '&to_id=' + to_id,
-		})*/
 	}
+	ajax({
+		type: 'POST',
+		url: site_url() + '?f=like_comment&comment_id=' + comment_id + '&to_id=' + to_id,
+	})
+}
+function like_reply(reply_id, to_id) {
+    var audio = new Audio(siteurl() + '/app/resources/mp3/notification-1.mp3');
+    audio.play();
+	var element = getID('like_reply_' + reply_id).className;
+	//var number = getID('tln_' + comment_id).value;	
+	if (element == '') {
+		//var like = Number(number) + Number(1);	
+		document.getElementById('iconr_' + reply_id).className = 'fas fa-heart';
+		document.querySelector('#like_reply_' + reply_id).setAttribute('class', 'liked');
+		//getID('tl_' + comment_id).innerHTML = like;
+		//getID('tln_' + comment_id).value = like;
+	} else if (element == 'liked') {
+		//var dislike = Number(number) - Number(1);
+		document.getElementById('iconr_' + reply_id).className = 'far fa-heart';
+		document.querySelector('#like_reply_' + reply_id).removeAttribute('class');
+		//getID('tl_' + comment_id).innerHTML = dislike;
+		//getID('tln_' + comment_id).value = dislike;
+	}
+	ajax({
+		type: 'POST',
+		url: site_url() + '?f=like_reply&reply_id=' + reply_id + '&to_id=' + to_id,
+	})
 }
 function follow(follower_id) {
 	ajax({

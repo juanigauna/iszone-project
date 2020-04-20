@@ -317,17 +317,44 @@ if ($f == 'logout') {
     session_unset();
     session_destroy();
 }
-if ($f == 'like' && $n['logged_in'] == true) {
+// Acá se repiten el los códigos porque todavía no encontré una forma óptima para simplificarlo
+if ($f == 'like_post' && $n['logged_in'] == true && $_GET['post_id']) {
     $post_id = $_GET['post_id'];
     $to_id = $_GET['to_id'];
     $time = time();
-    if (check_like_post($id, $post_id) == false) {
+    if (check_like($id, $post_id, "post") == false) {
         mysqli_query($con, "INSERT INTO likes (user_id, post_id, time) VALUES ('$id', '$post_id', '$time')");
         $n['like'] = fetch_array("SELECT * FROM likes WHERE user_id = '$id' AND post_id = '$post_id'");
         $post_id = $n['like']['post_id'];
         new_notification($id, $to_id, $post_id, 0, 3);
-    } elseif (check_like_post($id, $post_id) == true) {
+    } elseif (check_like($id, $post_id, "post") == true) {
         mysqli_query($con, "DELETE FROM likes WHERE user_id = '$id' AND post_id = '$post_id'");
+    }
+}
+if ($f == 'like_comment' && $n['logged_in'] == true && $_GET['comment_id']) {
+    $comment_id = $_GET['comment_id'];
+    $to_id = $_GET['to_id'];
+    $time = time();
+    if (check_like($id, $comment_id, "comment") == false) {
+        mysqli_query($con, "INSERT INTO likes (user_id, comment_id, time) VALUES ('$id', '$comment_id', '$time')");
+        $n['like'] = fetch_array("SELECT * FROM likes WHERE user_id = '$id' AND comment_id = '$comment_id'");
+        $comment_id = $n['like']['comment_id'];
+        new_notification($id, $to_id, $comment_id, 0, 3);
+    } elseif (check_like($id, $comment_id, "comment") == true) {
+        mysqli_query($con, "DELETE FROM likes WHERE user_id = '$id' AND comment_id = '$comment_id'");
+    }
+}
+if ($f == 'like_reply' && $n['logged_in'] == true && $_GET['reply_id']) {
+    $reply_id = $_GET['reply_id'];
+    $to_id = $_GET['to_id'];
+    $time = time();
+    if (check_like($id, $reply_id, "reply") == false) {
+        mysqli_query($con, "INSERT INTO likes (user_id, reply_id, time) VALUES ('$id', '$reply_id', '$time')");
+        $n['like'] = fetch_array("SELECT * FROM likes WHERE user_id = '$id' AND reply_id = '$reply_id'");
+        $reply_id = $n['like']['reply_id'];
+        new_notification($id, $to_id, $reply_id, 0, 3);
+    } elseif (check_like($id, $reply_id, "reply") == true) {
+        mysqli_query($con, "DELETE FROM likes WHERE user_id = '$id' AND reply_id = '$reply_id'");
     }
 }
 if ($f == 'update_location' && $n['logged_in'] == true) {
@@ -439,10 +466,6 @@ if ($f == 'get_last_posts') {
     $n['post'] = fetch_array("SELECT * FROM posts WHERE id = '$post_id'");
     include 'layout/posts/content.php';
 }
-// PST "EVENTOS FALSH"
-if ($f == 'fecha') {
-    echo time();
-}
 if ($f == 'read_all' && $n['logged_in'] == true) {
     $nots_unread = array();
     $qn = mysqli_query($con, "SELECT * FROM notifications WHERE to_id = '$id'");
@@ -453,20 +476,6 @@ if ($f == 'read_all' && $n['logged_in'] == true) {
     mysqli_query($con, "UPDATE notifications SET seen = '1' WHERE to_id = '$id'");
     $data['status'] = true;
     echo json_encode($data); 
-}
-if ($f == 'explode') {
-    $text = "1";
-    $nums = explode(", ", $text);
-    foreach ($nums as $key => $id) {
-        echo "<p>".$id."</p>";
-    }
-}
-if ($f == 'count-regresive') {
-    $birthday = strtotime('03-05-2020 00:00');
-    $now = strtotime(date("d-m-Y h:i"));
-    $subs = $birthday - $now; 
-    $res = $subs / 86400;
-    echo "Faltan ".round($res)." días para que seas pollo.";
 }
 if ($f == 'data_user') {
     $n['user'] = user(get_username($id));

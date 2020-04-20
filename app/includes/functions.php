@@ -59,6 +59,21 @@ function check_like_post($user_id, $post_id) {
         return false;
     }
 }
+function check_like($user_id, $e_id, $is) {
+    global $con;
+    if ($is == 'post') {
+        $q = mysqli_query($con, "SELECT * FROM likes WHERE user_id = '$user_id' AND post_id = '$e_id'");
+    } elseif ($is == 'comment') {
+        $q = mysqli_query($con, "SELECT * FROM likes WHERE user_id = '$user_id' AND comment_id = '$e_id'");
+    } elseif ($is == 'reply') {
+        $q = mysqli_query($con, "SELECT * FROM likes WHERE user_id = '$user_id' AND reply_id = '$e_id'");
+    }
+    if ($q->num_rows == 1) {
+        return true;
+    } elseif ($q->num_rows == 0) {
+        return false;
+    }
+}
 function check_location($city, $region, $country) {
     global $con;
     $q = mysqli_query($con, "SELECT * FROM locations WHERE city = '$city' AND region = '$region' AND country = '$country'");
