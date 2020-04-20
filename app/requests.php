@@ -339,7 +339,7 @@ if ($f == 'like_comment' && $n['logged_in'] == true && $_GET['comment_id']) {
         mysqli_query($con, "INSERT INTO likes (user_id, comment_id, time) VALUES ('$id', '$comment_id', '$time')");
         $n['like'] = fetch_array("SELECT * FROM likes WHERE user_id = '$id' AND comment_id = '$comment_id'");
         $comment_id = $n['like']['comment_id'];
-        new_notification($id, $to_id, $comment_id, 0, 3);
+        new_notification($id, $to_id, $comment_id, 0, 6);
     } elseif (check_like($id, $comment_id, "comment") == true) {
         mysqli_query($con, "DELETE FROM likes WHERE user_id = '$id' AND comment_id = '$comment_id'");
     }
@@ -352,7 +352,7 @@ if ($f == 'like_reply' && $n['logged_in'] == true && $_GET['reply_id']) {
         mysqli_query($con, "INSERT INTO likes (user_id, reply_id, time) VALUES ('$id', '$reply_id', '$time')");
         $n['like'] = fetch_array("SELECT * FROM likes WHERE user_id = '$id' AND reply_id = '$reply_id'");
         $reply_id = $n['like']['reply_id'];
-        new_notification($id, $to_id, $reply_id, 0, 3);
+        new_notification($id, $to_id, $reply_id, 0, 7);
     } elseif (check_like($id, $reply_id, "reply") == true) {
         mysqli_query($con, "DELETE FROM likes WHERE user_id = '$id' AND reply_id = '$reply_id'");
     }

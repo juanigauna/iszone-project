@@ -450,8 +450,14 @@ function new_notification($user_id, $to_id, $ref_id, $e_id, $type) {
         // Notificación para comentarios en las publicaciones
         mysqli_query($con, "INSERT INTO notifications (user_id, to_id, ref_id, post_id, type, time) VALUES ('$user_id', '$to_id', '$ref_id', '$e_id', '$type', '$time')");
     } elseif ($user_id != $to_id && $type == 5) {
-        // Notficiación para respuestas a comentarios
+        // Notificación para respuestas a comentarios
         mysqli_query($con, "INSERT INTO notifications (user_id, to_id, ref_id, comment_id, type, time) VALUES ('$user_id', '$to_id', '$ref_id', '$e_id', '$type', '$time')");
+    } elseif ($user_id != $to_id && $type == 6) {
+        // Notificación para likes en comentarios
+        mysqli_query($con, "INSERT INTO notifications (user_id, to_id, ref_id, type, time) VALUES ('$user_id', '$to_id', '$ref_id', '$type', '$time')");
+    } elseif ($user_id != $to_id && $type == 7) {
+        // Notificación para likes en comentarios
+        mysqli_query($con, "INSERT INTO notifications (user_id, to_id, ref_id, type, time) VALUES ('$user_id', '$to_id', '$ref_id', '$type', '$time')");
     }
 }
 function CountUsersOnline() {

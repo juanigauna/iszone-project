@@ -59,5 +59,31 @@
 		<div class="d-flex">
 			<p><a class="normal-color" href="<?php echo $n['site_url'] ?>/account/<?php echo get_username($n['reply']['user_id']) ?>"><?php echo get_username($n['reply']['user_id']) ?> <?php if (check_user_verified($n['notification']['user_id']) == true) { ?><i class="fad fa-badge-check badge-verified-adap"></i> <?php } ?></a> <?php echo $n['reply']['text'] ?></p>
 		</div>
+	<?php } elseif ($n['notification']['type'] == 6) { ?>
+		<?php 
+		$reply_id = $n['notification']['ref_id'];
+		$n['reply'] = fetch_array("SELECT * FROM replies WHERE id = '$reply_id'");
+		?>
+		<div class="d-flex">
+			<div class="pp _50 m-r-3" style="background: url(<?php echo get_profile_pic($n['notification']['user_id']) ?>);"></div>
+			<div class="d-grid">
+				<p><a class="normal-color" href="<?php echo $n['site_url'] ?>/account/<?php echo get_username($n['notification']['user_id']) ?>"><?php echo get_username($n['notification']['user_id']) ?> <?php if (check_user_verified($n['notification']['user_id']) == true) { ?><i class="fad fa-badge-check badge-verified-adap"></i> <?php } ?></a></p>
+				<p>Le gustó tu <a class="normal-color" href="#comment">comentario</a>: <?php echo $n['reply']['text'] ?></p>
+				<p style="font-size: 13px"><?php echo time_elapsed($n['notification']['time']) ?></p>
+			</div>
+		</div>
+	<?php } elseif ($n['notification']['type'] == 7) { ?>
+		<?php 
+		$reply_id = $n['notification']['ref_id'];
+		$n['reply'] = fetch_array("SELECT * FROM replies WHERE id = '$reply_id'");
+		?>
+		<div class="d-flex">
+			<div class="pp _50 m-r-3" style="background: url(<?php echo get_profile_pic($n['notification']['user_id']) ?>);"></div>
+			<div class="d-grid">
+				<p><a class="normal-color" href="<?php echo $n['site_url'] ?>/account/<?php echo get_username($n['notification']['user_id']) ?>"><?php echo get_username($n['notification']['user_id']) ?> <?php if (check_user_verified($n['notification']['user_id']) == true) { ?><i class="fad fa-badge-check badge-verified-adap"></i> <?php } ?></a></p>
+				<p>Le gustó tu <a class="normal-color" href="#reply">respuesta</a>: <?php echo $n['reply']['text'] ?></p>
+				<p style="font-size: 13px"><?php echo time_elapsed($n['notification']['time']) ?></p>
+			</div>
+		</div>
 	<?php } ?>
 </div>
