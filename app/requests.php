@@ -150,24 +150,27 @@ if ($f == 'new-post') {
     }
     echo json_encode($data);
 }
-if ($f == 'delete_post' && $n['logged_in'] == true) {
-    $post_id = $_GET['post_id'];
-    $q = mysqli_query($con, "SELECT * FROM posts WHERE id = '$post_id'");
-    $n['post'] = mysqli_fetch_array($q);
-    $data['status'] = false;
-    if ($q->num_rows == 1 && $id == $n['post']['user_id']) {
-        mysqli_query($con, "UPDATE posts SET deleted = '1'WHERE id = '$post_id' AND user_id = '$id'");
-        $data['status'] = true;
-    }
-    echo json_encode($data);
-}
-if ($f == 'delete_comment' && $n['logged_in'] == true) {
-    $comment_id = $_GET['comment_id'];
-    $q = mysqli_query($con, "SELECT * FROM comments WHERE id = '$comment_id' AND user_id = '$id'");
+if ($f == 'delete' && $n['logged_in'] == true && $_GET['e_id'] && is_numeric($_GET['e_id'])) {
+    $e_id = $_GET['e_id'];
     $data['status'] = 204;
-    if ($q->num_rows == 1) {
-        mysqli_query($con, "DELETE FROM comments WHERE id = '$comment_id' AND user_id = '$id'");
-        $data['status'] = 200;
+    if ($o == "post") {
+        $q = mysqli_query($con, "SELECT * FROM posts WHERE id = '$e_id' AND user_id = '$id'");
+        if ($q->num_rows == 1) {
+            mysqli_query($con, "UPDATE posts SET deleted = '1'WHERE id = '$e_id' AND user_id = '$id'");
+            $data['status'] = 200;
+        }
+    } elseif ($o == "comment") {
+        $q = mysqli_query($con, "SELECT * FROM comments WHERE id = '$e_id' AND user_id = '$id'");
+        if ($q->num_rows == 1) {
+            mysqli_query($con, "DELETE FROM comments WHERE id = '$e_id' AND user_id = '$id'");
+            $data['status'] = 200;
+        }
+    } elseif ($o == "reply") {
+        $q = mysqli_query($con, "SELECT * FROM replies WHERE id = '$e_id' AND user_id = '$id'");
+        if ($q->num_rows == 1) {
+            mysqli_query($con, "DELETE FROM replies WHERE id = '$e_id' AND user_id = '$id'");
+            $data['status'] = 200;
+        }
     }
     echo json_encode($data);
 }

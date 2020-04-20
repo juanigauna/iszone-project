@@ -41,7 +41,7 @@ $images = explode(', ', $n['post']['img']);
             <div class="p-absolute d-grid p-t-3 p-l-3 p-r-3 p-b-3" style="background: #fff; border: 1px solid #f5f5f5; right: 35px; top: 20px; border-radius: 5px">
                 <a id="d-btn" class="normal-color m-b-3" style="font-size: 12px" href="<?php echo $n['site_url'] ?>/post/<?php echo $n['post']['id'] ?>" target="_blank"><i class="fas fa-external-link-alt"></i>Abrir publicación</a>
                 <?php if ($n['logged_in'] == true && $id == $n['post']['user_id']) { ?>
-                    <a onclick="delete_post(<?php echo $n['post']['id'] ?>);" id="d-btn_<?php echo $n['post']['id'] ?>" style="color: #e74c3c; font-size: 12px"><i class="fas fa-trash"></i> Borrar</a>
+                    <a onclick="delete_(<?php echo $n['post']['id'] ?>, 'post');" id="del_post_<?php echo $n['post']['id'] ?>" style="color: #e74c3c; font-size: 12px"><i class="fas fa-trash"></i> Borrar</a>
                 <?php } ?>
             </div>
         </div>

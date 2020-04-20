@@ -343,6 +343,35 @@ function delete_comment(comment_id) {
 		}
 	})
 }
-function go_page(url) {
-	location.href = url;
+function delete_reply(reply_id) {
+	var button = document.querySelector('#btn_del_' + reply_id).innerHTML;
+	document.querySelector('#btn_del_' + reply_id).innerHTML = '<i class="spinner fad fa-spinner-third"></i>';
+	ajax({
+		dataType: 'json',
+		type: 'POST',
+		url: site_url() + '?f=delete_reply&reply_id=' + reply_id,
+		success: function (n) {
+			if (n.status == 200) {
+				document.querySelector('#comment_' + reply_id).remove();
+			} else if (n.status == 204) {
+				document.querySelector('#btn_del_' + reply_id).innerHTML = button;
+			}
+		}
+	})
+}
+function delete_(e_id, is) {
+	var button = document.querySelector('#del_' + is + '_' + e_id).innerHTML;
+	document.querySelector('#del_' + is + '_' + e_id).innerHTML = '<i class="spinner fad fa-spinner-third"></i>';
+	ajax({
+		dataType: 'json',
+		type: 'POST',
+		url: site_url() + '?f=delete&o='+ is +'&e_id=' + e_id,
+		success: function (n) {
+			if (n.status == 200) {
+				document.querySelector('#' + is + '_' + e_id).remove();
+			} else if (n.status == 204) {
+				document.querySelector('#del_' + is + '_'+ e_id).innerHTML = button;
+			}
+		}
+	})
 }

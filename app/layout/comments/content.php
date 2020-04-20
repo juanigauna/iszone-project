@@ -10,7 +10,7 @@
 			<div class="d-flex m-b-3">
 				<p class="normal-color text-bold m-r-2" style="font-size: 12px" onclick="reply(<?php echo $n['comment']['id'] ?>);">Responder</p>
 				<?php if ($n['logged_in'] == true && $n['comment']['user_id'] == $id) { ?>
-					<span id="btn_del_<?php echo $n['comment']['id'] ?>" class="text-bold" style="font-size: 12px; color: #e74c3c;" onclick="delete_comment(<?php echo $n['comment']['id'] ?>);">Eliminar</span>
+					<span id="del_comment_<?php echo $n['comment']['id'] ?>" class="text-bold" style="font-size: 12px; color: #e74c3c;" onclick="delete_(<?php echo $n['comment']['id'] ?>, 'comment');">Eliminar</span>
 				<?php } ?>
 			</div>
 		</div>
