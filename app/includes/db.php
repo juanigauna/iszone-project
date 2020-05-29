@@ -15,4 +15,4 @@ $con = new mysqli($n['db_host'], $n['db_user'], $n['db_pass'], $n['db_name']) or
 $n['site_title'] = "isZone";
 
 // Site URL
-$n['site_url'] = "http://192.168.0.122/iz";
+$n['site_url'] = "http://localhost/iz";
